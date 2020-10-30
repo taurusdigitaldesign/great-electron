@@ -1511,7 +1511,7 @@
 											"top": 650,
 											"width": 168.2001953125,
 											"height": 13,
-											"text": "+willDestory()",
+											"text": "+willDestroy()",
 											"horizontalAlignment": 0
 										}
 									],
@@ -4436,7 +4436,7 @@
 											},
 											"visible": false,
 											"font": "Arial;13;0",
-											"width": 73.67724609375,
+											"width": 82.56396484375,
 											"height": 13,
 											"text": "(from Model)"
 										},
@@ -4797,7 +4797,7 @@
 							"_parent": {
 								"$ref": "AAAAAAF1clDvrYEwZlU="
 							},
-							"name": "willDestory"
+							"name": "willDestroy"
 						}
 					]
 				},

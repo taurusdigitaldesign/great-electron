@@ -5,8 +5,10 @@ import GreatWindow from './base/GreatWindow';
 const great = new GreatApp();
 
 great.on('create', () => {
-  new GreatWindow({
+  const win = new GreatWindow({
     width: 800,
     height: 600
-  }).init(join(great.app.getAppPath(), './src/render/index.html'));
+  });
+  win.init(join(great.app.getAppPath(), './src/render/index.html'));
+  return win;
 });

@@ -1,12 +1,15 @@
-import { app, BrowserWindow } from 'electron';
+import { app as electron_app, BrowserWindow } from 'electron';
 class GreatApp {
   static instance: GreatApp;
 
-  app: any = app;
+  app: any = electron_app;
 
   constructor() {
     if (!GreatApp.instance) {
       GreatApp.instance = this;
+      this.app.on('window-all-closed', () => {
+        if (process.platform !== 'darwin') this.app.quit();
+      });
     }
     return GreatApp.instance;
   }
@@ -17,13 +20,13 @@ class GreatApp {
 
   on(event, callback) {
     if (event === 'create') {
-      app.whenReady().then(callback);
-      app.on('activate', () => {
+      this.app.whenReady().then(callback);
+      this.app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length === 0) callback();
       });
       return;
     }
-    app.on(event, callback);
+    this.app.on(event, callback);
   }
 }
 

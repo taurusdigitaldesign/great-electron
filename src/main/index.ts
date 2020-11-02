@@ -10,7 +10,3 @@ great.on('create', () => {
     height: 600
   }).init(join(great.app.getAppPath(), './src/render/index.html'));
 });
-
-great.on('window-all-closed', function () {
-  if (process.platform !== 'darwin') great.app.quit();
-});

@@ -1,4 +1,6 @@
 import { BrowserWindow, BrowserWindowConstructorOptions } from 'electron';
+import GreatApp from './GreatApp';
+
 class GreatWindow extends BrowserWindow {
   constructor(options: BrowserWindowConstructorOptions) {
     super(options);
@@ -6,7 +8,7 @@ class GreatWindow extends BrowserWindow {
 
   init(url: string) {
     this.loadFile(url);
-    this.webContents.openDevTools();
+    GreatApp.getInstance().config.openDevTool && this.webContents.openDevTools();
   }
 }
 

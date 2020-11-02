@@ -1,6 +1,8 @@
 import { app, BrowserWindow } from "electron";
 import { join } from "path";
 
+import Net from './base/utils/Net';
+
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -37,3 +39,5 @@ app.on("window-all-closed", function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+
+Net.ping('http://www.baidu.com');

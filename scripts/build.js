@@ -4,8 +4,10 @@ const Bundler = require("parcel-bundler");
 const buildMain = async () => {
   const main = path.join(__dirname, "../src/main/index.ts");
   const options = {
-    outDir: "./dist/",
+    outDir: "./dist/main/",
     target: "electron",
+    sourceMaps: false,
+    // minify: true,
     detailedReport: true,
   };
 

@@ -21,4 +21,4 @@ class Net {
   }
 }
 
-module.exports = Net;
+export default Net;

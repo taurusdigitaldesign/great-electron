@@ -1,40 +1,28 @@
-import { app, BrowserWindow } from "electron";
-import { join } from "path";
-
+import { join } from 'path';
+import GreatApp from './base/GreatApp';
+import GreatWindow from './base/GreatWindow';
 import Net from './base/utils/Net';
 
+const app = GreatApp.getInstance();
+
 const createWindow = () => {
-  // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  new GreatWindow({
     width: 800,
-    height: 600,
-  });
+    height: 600
+  }).init(join(app.getAppPath(), './src/render/index.html'));
+};
 
-  // and load the index.html of the app.
-  mainWindow.loadFile(join(app.getAppPath(), './src/render/index.html'));
+app.whenReady().then(createWindow);
 
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
-}
-
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
-app.whenReady().then(() => {
-  createWindow();
-
-  app.on("activate", function () {
-    // On macOS it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0) createWindow();
-  });
+app.on('activate', function () {
+  if (GreatWindow.getAllWindows().length === 0) createWindow();
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
-app.on("window-all-closed", function () {
-  if (process.platform !== "darwin") app.quit();
+app.on('window-all-closed', function () {
+  if (process.platform !== 'darwin') app.quit();
 });
 
 // In this file you can include the rest of your app's specific main process

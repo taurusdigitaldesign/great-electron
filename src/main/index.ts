@@ -1,21 +1,22 @@
 import { join } from 'path';
+import isDev from 'electron-is-dev';
+
 import GreatApp from './base/GreatApp';
 import GreatWindow from './base/GreatWindow';
 import { GreatLog } from './base/plugins/log';
+import { GreatTray } from './base/plugins/tray';
 
 const great = new GreatApp();
 
 // 安装插件
-great.usePlugin(new GreatLog());
+great.usePlugin([new GreatLog(), new GreatTray()]);
 
 great.on('create', () => {
-  const win = new GreatWindow(join(great.app.getAppPath(), './src/render/index.html'), {
-    width: 800,
-    height: 600
-  });
-  // great.setMainWindow(win);
-  // win.init(join(great.app.getAppPath(), './src/render/index.html'));
-  return win;
+  return new GreatWindow(
+    isDev ? join(great.app.getAppPath(), './src/render/index.html') : 'http://localhost:8000',
+    {
+      width: 800,
+      height: 600
+    }
+  );
 });
-
-setTimeout(() => console.debug('hello, test'), 3000);

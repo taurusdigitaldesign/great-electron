@@ -1,3 +1,4 @@
+import { join } from 'path';
 import { Menu, Tray } from 'electron';
 import GreatWindow from '../../GreatWindow';
 import IGreatPlugin from '../IGreatPlugin';
@@ -11,9 +12,8 @@ class GreatTray implements IGreatPlugin {
 
   tray: Tray = null;
 
-  constructor(icon?: string, ) {
-    this.icon = '';
-    this.tray = new Tray(icon);
+  constructor(icon?: string) {
+    this.icon = icon || join(__dirname, './icon/tray.png');;
   }
 
   init(mainWin: GreatWindow) {
@@ -26,12 +26,13 @@ class GreatTray implements IGreatPlugin {
     })
   }
 
-  create(win: GreatWindow) {
+  create(mainWin: GreatWindow) {
     console.log('GreatTray:create');
-    this.init(win);
+    this.tray = new Tray(this.icon);
+    this.init(mainWin);
   }
 
-  willDestroy() {
+  willDestroy(app: any, mainWin: GreatWindow) {
     console.log('GreatTray:willDestroy');
     // this.tray.destroy();
   }

@@ -5,6 +5,8 @@ import IGreatPlugin from '../IGreatPlugin';
 class GreatLog implements IGreatPlugin {
 
   create(mainWin: GreatWindow) {
+    console.log('GreatLog:create');
+
     log.transports.file.level = 'silly';
     log.transports.console.level = 'silly';
     
@@ -14,7 +16,9 @@ class GreatLog implements IGreatPlugin {
     console.error = log.error;
   }
 
-  willDestroy: () => void;
+  willDestroy(app: any, mainWin: GreatWindow) {
+    console.log('GreatLog:willDestroy');
+  }
 }
 
 export { GreatLog };

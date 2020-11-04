@@ -1,6 +1,7 @@
 import { app as electron_app, BrowserWindow } from 'electron';
 import GreatWindow from './GreatWindow';
 import IGreatPlugin from './plugins/IGreatPlugin';
+
 class GreatApp {
   static instance: GreatApp;
 
@@ -11,7 +12,7 @@ class GreatApp {
     // 是否打开调试面板
     openDevTool: false
   };
-  
+
   // 主窗口
   private mainWin: GreatWindow = null;
 
@@ -40,8 +41,12 @@ class GreatApp {
     return this.mainWin.win;
   }
 
-  usePlugin(plugin: IGreatPlugin) {
-    this.plugins.push(plugin);
+  usePlugin(plugins: IGreatPlugin | Array<IGreatPlugin>) {
+    if (plugins instanceof Array) {
+      this.plugins = this.plugins.concat(plugins);
+    } else {
+      this.plugins.push(plugins);
+    }
     return this;
   }
 
@@ -49,7 +54,7 @@ class GreatApp {
     if (event === 'create') {
       this.app.whenReady().then(() => {
         this.mainWin = callback();
-        this.plugins.map(plugin => plugin.create(this.mainWin));
+        this.plugins.map((plugin) => plugin.create(this.mainWin));
       });
       // Mac平台
       this.app.on('activate', () => {

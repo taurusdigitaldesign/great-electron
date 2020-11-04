@@ -16,7 +16,8 @@ class GreatTray implements IGreatPlugin {
     this.tray = new Tray(icon);
   }
 
-  init(win: GreatWindow) {
+  init(mainWin: GreatWindow) {
+    const win = mainWin.win;
     this.tray.setContextMenu(Menu.buildFromTemplate([]));
     this.tray.on('double-click', () => {
       win.show();

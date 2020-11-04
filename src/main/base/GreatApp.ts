@@ -5,18 +5,18 @@ class GreatApp {
   static instance: GreatApp;
 
   app: any = electron_app;
-  
-  // 主窗口
-  win: GreatWindow = null;
-
-  // 插件列表
-  plugins: Array<IGreatPlugin> = [];
 
   // 公共设置
   config = {
     // 是否打开调试面板
     openDevTool: false
   };
+  
+  // 主窗口
+  private mainWin: GreatWindow = null;
+
+  // 插件列表
+  private plugins: Array<IGreatPlugin> = [];
 
   constructor() {
     if (!GreatApp.instance) {
@@ -32,11 +32,24 @@ class GreatApp {
     return GreatApp.instance;
   }
 
+  setMainWindow(win: GreatWindow) {
+    this.mainWin = win;
+  }
+
+  getMainWindow() {
+    return this.mainWin.win;
+  }
+
+  usePlugin(plugin: IGreatPlugin) {
+    this.plugins.push(plugin);
+    return this;
+  }
+
   on(event, callback) {
     if (event === 'create') {
       this.app.whenReady().then(() => {
-        this.win = callback();
-        this.plugins.map(plugin => plugin.create(this.win));
+        this.mainWin = callback();
+        this.plugins.map(plugin => plugin.create(this.mainWin));
       });
       // Mac平台
       this.app.on('activate', () => {

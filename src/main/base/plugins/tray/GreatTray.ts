@@ -13,7 +13,7 @@ class GreatTray implements IGreatPlugin {
   tray: Tray = null;
 
   constructor(icon?: string) {
-    this.icon = icon || join(__dirname, './icon/tray.png');;
+    this.icon = icon || join(__dirname, './public/icon/tray.png');
   }
 
   init(mainWin: GreatWindow) {

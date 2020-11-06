@@ -1,4 +1,6 @@
-import { app as electron_app, BrowserWindow } from 'electron';
+import { join } from 'path';
+import { app as electron_app, BrowserWindow, BrowserWindowConstructorOptions } from 'electron';
+import isDev from 'electron-is-dev';
 import GreatWindow from './GreatWindow';
 import IGreatPlugin from './plugins/IGreatPlugin';
 
@@ -15,26 +17,24 @@ class GreatApp {
 
   // 主窗口
   private mainWin: GreatWindow = null;
+  private url: string = '';
+  private mainWinOptions: BrowserWindowConstructorOptions = null;
 
   // 插件列表
   private plugins: Array<IGreatPlugin> = [];
 
-  constructor() {
+  // 构造函数
+  constructor(url: string, options: BrowserWindowConstructorOptions) {
     if (!GreatApp.instance) {
+      this.url = url;
+      this.mainWinOptions = options;
       GreatApp.instance = this;
+
       this.app.on('window-all-closed', () => {
         if (process.platform !== 'darwin') this.app.quit();
       });
     }
     return GreatApp.instance;
-  }
-
-  static getInstance() {
-    return GreatApp.instance;
-  }
-
-  setMainWindow(win: GreatWindow) {
-    this.mainWin = win;
   }
 
   getMainWindow() {
@@ -50,19 +50,38 @@ class GreatApp {
     return this;
   }
 
-  on(event, callback) {
-    if (event === 'create') {
-      this.app.whenReady().then(() => {
-        this.mainWin = callback();
+  // 启动
+  start(callback?:Function) {
+    this.app.whenReady().then(() => {
+      this.createMainWindow();
+      this.plugins.map((plugin) => plugin.create(this.mainWin));
+      callback && callback();
+    });
+    // Mac平台
+    this.app.on('activate', () => {
+      if (BrowserWindow.getAllWindows().length === 0) {
+        this.createMainWindow();
         this.plugins.map((plugin) => plugin.create(this.mainWin));
-      });
-      // Mac平台
-      this.app.on('activate', () => {
-        if (BrowserWindow.getAllWindows().length === 0) callback();
-      });
-      return;
-    }
+        callback && callback();
+      }
+    });
+  }
+
+  on(event, callback) {
     this.app.on(event, callback);
+  }
+
+  // 创建主窗口
+  private createMainWindow() {
+    this.mainWin = new GreatWindow(
+      isDev ? join(this.app.getAppPath(), this.url) : this.url,
+      this.mainWinOptions
+    );
+  }
+
+  // 获取实例
+  static getInstance() {
+    return GreatApp.instance;
   }
 }
 

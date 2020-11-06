@@ -38,7 +38,7 @@ const buildMain = async () => {
     outDir: './dist/main/',
     target: 'electron',
     sourceMaps: false,
-    // minify: true,
+    minify: true,
     detailedReport: true
   };
 

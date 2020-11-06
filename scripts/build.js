@@ -38,13 +38,16 @@ const buildMain = async () => {
     outDir: './dist/main/',
     target: 'electron',
     sourceMaps: false,
-    minify: true,
+    // minify: true,
     detailedReport: true
   };
 
   const bundler = new Bundler(main, options);
   await bundler.bundle();
+  // 框架自带
   copyFolder('../src/main/base/public', '../dist/main/public', true);
+  // 项目
+  copyFolder('../src/main/public', '../dist/main/public', true);
   process.exit(0);
 };
 

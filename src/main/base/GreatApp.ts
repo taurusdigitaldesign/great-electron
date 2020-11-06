@@ -2,6 +2,7 @@ import { join } from 'path';
 import { app as electron_app, BrowserWindow, BrowserWindowConstructorOptions } from 'electron';
 import isDev from 'electron-is-dev';
 import GreatWindow from './GreatWindow';
+import GreatService from './service';
 import IGreatPlugin from './plugins/IGreatPlugin';
 
 class GreatApp {
@@ -19,6 +20,9 @@ class GreatApp {
   private mainWin: GreatWindow = null;
   private url: string = '';
   private mainWinOptions: BrowserWindowConstructorOptions = null;
+
+  // 服务层
+  private serviceWin: any = null;
 
   // 插件列表
   private plugins: Array<IGreatPlugin> = [];
@@ -51,19 +55,18 @@ class GreatApp {
   }
 
   // 启动
-  start(callback?:Function) {
-    this.app.whenReady().then(() => {
+  start(callback?: Function) {
+    const creat = () => {
       this.createMainWindow();
+      this.serviceWin = new GreatService();
       this.plugins.map((plugin) => plugin.create(this.mainWin));
       callback && callback();
-    });
+    };
+
+    this.app.whenReady().then(() => creat());
     // Mac平台
     this.app.on('activate', () => {
-      if (BrowserWindow.getAllWindows().length === 0) {
-        this.createMainWindow();
-        this.plugins.map((plugin) => plugin.create(this.mainWin));
-        callback && callback();
-      }
+      if (BrowserWindow.getAllWindows().length === 0) creat();
     });
   }
 

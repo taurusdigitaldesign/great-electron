@@ -1,3 +1,6 @@
 const remote = window.require('electron').remote;
-const runPath = remote.getCurrentWindow().runPath;
-window.require(runPath);
+
+window.ipcRenderer = window.require('electron').ipcRenderer;
+window.ipcRenderer = remote.app.ipcRenderWrapper(window.ipcRenderer);
+
+console.log(window.ipcRenderer);

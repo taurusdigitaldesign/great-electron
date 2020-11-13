@@ -9,6 +9,7 @@ const great = new GreatApp(isDev ? './src/render/index.html' : 'http://localhost
   height: 600,
   webPreferences: {
     // webviewTag: true,
+    enableRemoteModule: true,
     nodeIntegration: true,
     preload: join(__dirname, './public/preload/main.js')
   }

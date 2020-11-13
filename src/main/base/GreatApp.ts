@@ -1,8 +1,14 @@
 import { join } from 'path';
-import { app as electron_app, BrowserWindow, BrowserWindowConstructorOptions } from 'electron';
+import {
+  app as electron_app,
+  BrowserWindow,
+  BrowserWindowConstructorOptions
+} from 'electron';
 import isDev from 'electron-is-dev';
+
 import GreatWindow from './GreatWindow';
 import GreatService from './service';
+import { IpcRender as IpcRenderWrapper } from './ipc';
 import IGreatPlugin from './plugins/IGreatPlugin';
 
 class GreatApp {
@@ -32,6 +38,7 @@ class GreatApp {
     if (!GreatApp.instance) {
       this.url = url;
       this.mainWinOptions = options;
+      this.app.ipcRenderWrapper = IpcRenderWrapper;
       GreatApp.instance = this;
 
       this.app.on('window-all-closed', () => {

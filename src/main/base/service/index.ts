@@ -10,6 +10,7 @@ class GreatService extends BrowserWindow {
       fullscreen: false,
       skipTaskbar: false,
       webPreferences: {
+        enableRemoteModule: true,
         nodeIntegration: true,
         preload: path.join(__dirname, './public/preload/service.js')
       }

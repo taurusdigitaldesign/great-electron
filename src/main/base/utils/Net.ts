@@ -13,7 +13,7 @@ class Net {
           const matchRes = isWin
             ? stdout.match(/(?<= = )\d+(?=ms)/g)[2]
             : stdout.match(/(?<= min\/avg\/max\/stddev = ).*(?= ms)/)[0].split('/')[1];
-          console.log(matchRes);
+          console.info(matchRes);
           matchRes.length > 0 ? resolve(matchRes) : reject();
         }
       });

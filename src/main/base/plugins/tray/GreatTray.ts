@@ -27,13 +27,13 @@ class GreatTray implements IGreatPlugin {
   }
 
   create(mainWin: GreatWindow) {
-    console.log('GreatTray:create');
+    console.info('GreatTray:create');
     this.tray = new Tray(this.icon);
     this.init(mainWin);
   }
 
   willDestroy(app: any, mainWin: GreatWindow) {
-    console.log('GreatTray:willDestroy');
+    console.info('GreatTray:willDestroy');
     // this.tray.destroy();
   }
 }

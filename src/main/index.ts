@@ -18,5 +18,5 @@ const great = new GreatApp(isDev ? './src/render/index.html' : 'http://localhost
 great.usePlugin([new GreatLog(), new GreatTray()]);
 // 启动
 great.start(() => {
-  console.log('app started');
+  console.info('app started');
 });

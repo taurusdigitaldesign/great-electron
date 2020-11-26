@@ -1,4 +1,3 @@
-import url from 'url';
 import { join } from 'path';
 import isDev from 'electron-is-dev';
 

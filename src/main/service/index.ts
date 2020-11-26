@@ -10,3 +10,7 @@
 // });
 
 console.log('hello service');
+
+import { add } from '../native/lib.rs';
+
+console.log(add(3, 5));

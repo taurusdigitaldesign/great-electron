@@ -46,7 +46,7 @@ const buildMain = async () => {
     // minify: true,
     detailedReport: true
   };
-  const bundler = new Bundler(entries[0], options);
+  let bundler = new Bundler(entries[0], options);
   await bundler.bundle();
 
   // build service

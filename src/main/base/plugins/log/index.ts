@@ -1,6 +1,6 @@
 import * as log from 'electron-log';
-import GreatApp from '../../GreatApp';
 import GreatWindow from '../../GreatWindow';
+import GreatWinConfig from '../../GreatWinConfig';
 import IGreatPlugin from '../IGreatPlugin';
 
 class GreatLog implements IGreatPlugin {
@@ -10,7 +10,7 @@ class GreatLog implements IGreatPlugin {
     log.transports.file.level = 'silly';
     log.transports.console.level = 'silly';
 
-    if (!GreatApp.getInstance().config.openDevTool) {
+    if (GreatWinConfig.openDevTool) {
       console.info = log.info;
       console.debug = log.debug;
       console.warn = log.warn;

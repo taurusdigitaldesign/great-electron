@@ -1,17 +1,17 @@
 import { BrowserWindow, BrowserWindowConstructorOptions } from 'electron';
-import GreatApp from './GreatApp';
+import GreatWinConfig from './GreatWinConfig';
 
 class GreatWindow {
   // URL
   url: string = '';
   // 窗口对象
-  win: BrowserWindow = null;
+  win: BrowserWindow;
 
   constructor(url: string, options: BrowserWindowConstructorOptions) {
     this.url = url;
     this.win = new BrowserWindow(options);
     this.win.loadFile(url);
-    GreatApp.getInstance().config.openDevTool && this.win.webContents.openDevTools();
+    GreatWinConfig.openDevTool && this.win.webContents.openDevTools();
   }
 }
 

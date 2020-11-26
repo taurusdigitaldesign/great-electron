@@ -1,11 +1,9 @@
-import { join } from 'path';
 import {
   app as electron_app,
   BrowserWindow,
   BrowserWindowConstructorOptions,
   ipcMain
 } from 'electron';
-import isDev from 'electron-is-dev';
 
 import GreatWindow from './GreatWindow';
 import GreatService from './service';
@@ -16,12 +14,6 @@ class GreatApp {
   static instance: GreatApp;
 
   app: any = electron_app;
-
-  // 公共设置
-  config = {
-    // 是否打开调试面板
-    openDevTool: false
-  };
 
   // 主窗口
   private mainWin: GreatWindow = null;
@@ -87,7 +79,7 @@ class GreatApp {
   // 创建主窗口
   private createMainWindow() {
     this.mainWin = new GreatWindow(
-      isDev ? join(this.app.getAppPath(), this.url) : this.url,
+      this.url,
       this.mainWinOptions
     );
   }

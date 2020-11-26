@@ -3,7 +3,7 @@
 // const ipc = ipcRender(window.ipcRenderer);
 
 
-// ipc.on('test', (event, data) => {
-//   console.log('接收到的数据', data);
-//   return '回复的数据';
+// ipc.emit('test', { txt: '发送的消息' }).then((event) => {
+//   console.log('--收到的回复消息--', event.data);
 // });
+

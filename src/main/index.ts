@@ -26,3 +26,5 @@ great.usePlugin([new GreatLog(), new GreatTray()]);
 great.start(() => {
   console.info('app started');
 });
+
+export default great;

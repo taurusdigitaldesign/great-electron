@@ -1,5 +1,5 @@
 import ipcRender from '@bit/greatfed.quickfox.ipc/dist/render';
-import { ipcRenderer } from 'electron';
+import { BrowserWindow, ipcRenderer, remote } from 'electron';
 import axios from 'axios';
 
 import { add } from '../native/lib.rs';
@@ -20,3 +20,6 @@ ipc.on('testapi', async (event, data) => {
 });
 
 console.log(add(3, 5));
+
+const mainWin: BrowserWindow = remote.require('./index').default.getMainWindow();
+mainWin.minimize();

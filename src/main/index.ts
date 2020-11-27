@@ -16,7 +16,7 @@ const great = new GreatApp(isDev ? './src/render/index.html' : 'http://localhost
     // webviewTag: true,
     enableRemoteModule: true,
     nodeIntegration: true,
-    preload: join(__dirname, './public/preload/main.js')
+    preload: join(__dirname, './public/preload/render.js')
   }
 });
 // 安装插件

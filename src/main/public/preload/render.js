@@ -1,9 +1,13 @@
-// const ipcRender = require('@bit/greatfed.quickfox.ipc/dist/render').default;
-// window.ipcRenderer = require('electron').ipcRenderer;
-// const ipc = ipcRender(window.ipcRenderer);
+const ipcRender = require('@bit/greatfed.quickfox.ipc/dist/render').default;
+console.log(ipcRender);
+
+window.ipcRenderer = require('electron').ipcRenderer;
+window.ipc = ipcRender(window.ipcRenderer);
+console.log(ipc);
 
 
-// ipc.emit('test', { txt: '发送的消息' }).then((event) => {
-//   console.log('--收到的回复消息--', event.data);
-// });
+window.ipc.emit('test', { txt: '发送的消息' }).then((event) => {
+    console.log('--收到的回复消息--', event.data);
+  });
+  
 

@@ -1,13 +1,15 @@
-const ipcRender = require('@bit/greatfed.quickfox.ipc/dist/render').default;
-console.log(ipcRender);
+const IPCClient = require('@bit/greatfed.quickfox.ipc/dist/render').default;
+const ipcRenderer = require('electron').ipcRenderer;
+const  { remote } = require('electron');
 
-window.ipcRenderer = require('electron').ipcRenderer;
-window.ipc = ipcRender(window.ipcRenderer);
-console.log(ipc);
+const great = {
+  ipc: new IPCClient(ipcRenderer),
+  isWin: remote.require('./index').default.isWin()
+};
+window.great = great;
 
 
-window.ipc.emit('test', { txt: '发送的消息' }).then((event) => {
-    console.log('--收到的回复消息--', event.data);
-  });
-  
-
+// ipc demo
+great.ipc.emit('test', { txt: '发送的消息' }).then((event) => {
+  console.log('--收到的回复消息--', event.data);
+});

@@ -1,4 +1,4 @@
-import IpcMain from './IpcMain';
-import IpcRender from './IpcRender';
+import IPCServer, { IIPCServer } from './IPCServer';
+import IPCClient, { IIPCClient } from './IPCClient';
 
-export { IpcMain, IpcRender };
+export { IPCServer, IIPCServer, IPCClient, IIPCClient };

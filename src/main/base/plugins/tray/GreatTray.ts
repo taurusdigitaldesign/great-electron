@@ -1,38 +1,37 @@
 import { join } from 'path';
-import { Menu, Tray } from 'electron';
-import GreatWindow from '../../GreatWindow';
+import { Menu, MenuItemConstructorOptions, Tray, BrowserWindow } from 'electron';
+
+import GreatApp from '../../GreatApp';
 import IGreatPlugin from '../IGreatPlugin';
-import IGreatTrayMenu from './IGreatTrayMenu';
 
 class GreatTray implements IGreatPlugin {
   // 图标
-  icon: string = '';
+  icon: string = join(__dirname, './public/icon/tray.png');
   // 菜单
-  menus: Array<IGreatTrayMenu> = [];
+  menus: Array<MenuItemConstructorOptions> = [];
 
-  tray: Tray = null;
+  tray: Tray | undefined;
 
-  constructor(icon?: string) {
-    this.icon = icon || join(__dirname, './public/icon/tray.png');
+  constructor(menus?: Array<MenuItemConstructorOptions>) {
+    this.menus = menus || [];
   }
 
-  private init(mainWin: GreatWindow) {
-    const win = mainWin.win;
-    this.tray.setContextMenu(Menu.buildFromTemplate([]));
-    this.tray.on('double-click', () => {
+  private init(win: BrowserWindow) {
+    this.tray?.setContextMenu(Menu.buildFromTemplate(this.menus));
+    this.tray?.on('double-click', () => {
       win.show();
       //模拟桌面程序点击通知区图标实现打开关闭应用的功能
       win.setSkipTaskbar(!win.isVisible());
     })
   }
 
-  create(mainWin: GreatWindow) {
+  create(app: GreatApp) {
     console.info('GreatTray:create');
     this.tray = new Tray(this.icon);
-    this.init(mainWin);
+    this.init(app.getMainWindow());
   }
 
-  willDestroy(app: any, mainWin: GreatWindow) {
+  willDestroy(app: GreatApp) {
     console.info('GreatTray:willDestroy');
     // this.tray.destroy();
   }

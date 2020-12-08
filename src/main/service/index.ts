@@ -1,25 +1,26 @@
-import ipcRender from '@bit/greatfed.quickfox.ipc/dist/render';
-import { BrowserWindow, ipcRenderer, remote } from 'electron';
 import axios from 'axios';
-
-import { add } from '../native/lib.rs';
+import IPCClient from '@bit/greatfed.quickfox.ipc/dist/render';
+import { BrowserWindow, ipcRenderer, remote } from 'electron';
+import Net from '../base/utils/Net';
 
 window.ipcRenderer = ipcRenderer;
-const ipc = ipcRender(window.ipcRenderer);
-console.log(ipc);
+const ipc = new IPCClient(window.ipcRenderer);
 
-ipc.on('test', (event, data) => {
-  console.log('接收到的数据', data);
-  return '回复的数据';
-});
+// ======  Demo1  ======
 
-ipc.on('testapi', async (event, data) => {
-  const res = await axios.get('https://jsonplaceholder.typicode.com/todos/1');
-  console.log(res.data);
-  return res.data;
-});
+// ipc.on('test', async (event, data) => {
+//   const res = await axios.get('https://jsonplaceholder.typicode.com/todos/1');
+//   console.log('接收到的数据', data);
+//   console.log(res.data);
+//   return res.data;
+// });
 
-console.log(add(3, 5));
+// ======  Demo2  ======
 
-const mainWin: BrowserWindow = remote.require('./index').default.getMainWindow();
-mainWin.minimize();
+// const mainWin: BrowserWindow = remote.require('./index').default.getMainWindow();
+// mainWin.minimize();
+
+// ======  Demo3  ======
+
+// console.log(Net.ping(['8.129.180.12']));
+Net.getExternalIP().then((res) => console.log(res));

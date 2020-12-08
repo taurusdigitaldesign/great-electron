@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { spawn, exec } = require('child_process');
 const Bundler = require('parcel-bundler');
 
 // 拷贝静态资源
@@ -31,7 +32,14 @@ const copyFolder = (from, to, direct) => {
   });
 };
 
-// 构建
+// 编译Native
+const buildNaitve = () => {
+  const dist = path.join(__dirname, '../dist/render/lib.wasm');
+  const src = path.join(__dirname, '../src/native/lib.go');
+  exec(`set GOOS=js&&set GOARCH=wasm&&go build -o ${dist} ${src}`);
+};
+
+// 构建Main
 const buildMain = async () => {
   const entries = [
     path.join(__dirname, '../src/main/index.ts'),
@@ -62,7 +70,17 @@ const buildMain = async () => {
   // 框架自带的public和项目中的public
   copyFolder('../src/main/base/public', '../dist/main/public', true);
   copyFolder('../src/main/public', '../dist/main/public', true);
-  process.exit(0);
+  copyFolder('../src/main/libs', '../dist/main/libs', true);
 };
 
-buildMain();
+// 构建Render
+const buildRender = () => {
+  copyFolder('../src/render', '../dist/render', true);
+};
+
+(async () => {
+  // buildNaitve();
+  await buildMain();
+  buildRender();
+  process.exit(0);
+})();

@@ -1,10 +1,10 @@
 import * as log from 'electron-log';
-import GreatWindow from '../../GreatWindow';
+import GreatApp from '../../GreatApp';
 import GreatWinConfig from '../../GreatWinConfig';
 import IGreatPlugin from '../IGreatPlugin';
 
 class GreatLog implements IGreatPlugin {
-  create(mainWin: GreatWindow) {
+  create(app: GreatApp) {
     console.info('GreatLog:create');
 
     log.transports.file.level = 'silly';
@@ -18,7 +18,7 @@ class GreatLog implements IGreatPlugin {
     }
   }
 
-  willDestroy(app: any, mainWin: GreatWindow) {
+  willDestroy(app: GreatApp) {
     console.info('GreatLog:willDestroy');
   }
 }

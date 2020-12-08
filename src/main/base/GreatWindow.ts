@@ -10,7 +10,7 @@ class GreatWindow {
   constructor(url: string, options: BrowserWindowConstructorOptions) {
     this.url = url;
     this.win = new BrowserWindow(options);
-    this.win.loadFile(url);
+    GreatWinConfig.loadUrl ? this.win.loadURL(url) : this.win.loadFile(url);
     GreatWinConfig.openDevTool && this.win.webContents.openDevTools();
   }
 }

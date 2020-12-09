@@ -7,7 +7,7 @@ import GreatWinConfig from './base/GreatWinConfig';
 import { GreatDLL, GreatLog, GreatTray, GreatUpdater } from './base/plugins';
 
 // 配置
-GreatWinConfig.openDevTool = true;
+// GreatWinConfig.openDevTool = true;
 GreatWinConfig.loadUrl = false;
 
 const great = new GreatApp(

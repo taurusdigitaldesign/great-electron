@@ -11,7 +11,8 @@
   },
   "scripts": {
     "start": "electron .",
-    "build:native": "set GOOS=js&&set GOARCH=wasm&&go build -o ./dist/render/lib.wasm ./src/native/lib.go",
+    "build:native:go": "set GOOS=js&&set GOARCH=wasm&&go build -o ./dist/main/public/preload/lib.wasm ./src/native/lib.go",
+    "build:native": "tinygo build -o ./dist/main/public/preload/lib.wasm -target wasm ./src/native/lib.go",
     "build:main:tsc": "tsc",
     "build:main": "cross-env NODE_ENV=development node ./scripts/build.js",
     "release:channel": "node ./scripts/publish.js"

@@ -23,4 +23,4 @@ const ipc = new IPCClient(window.ipcRenderer);
 // ======  Demo3  ======
 
 // console.log(Net.ping(['8.129.180.12']));
-Net.getExternalIP().then((res) => console.log(res));
+// Net.getExternalIP().then((res) => console.log(res));
